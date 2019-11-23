@@ -8,6 +8,7 @@ A list of attributes you can give elements that you want to animate is below:
  - <b>typingLoop</b>: required for all elements that use the 'addTypingEffect' attribute. A string ("") that contains either 'false' or how long <i>in seconds</i> the pause between each loop should be. Example: \<p typingLoop="2">\</p> or \<p typingLoop="false">\</p>
  - <b>typingKeepHeight</b>: required for all elements that use the 'addTypingEffect' attribute. A string ("") that contains a boolean. On multiline text, other elements beneath will move up and down when text is written, if this value is false. By making this value 'true', this library will calculate the space needed and ensure that elements beneath will not move about. Recommended for multiline text. Example: \<p typingKeepHeight="true">\</p> or \<p typingKeepHeight="false">\</p>
  - <b>typingStopAllow</b>: required for all elements that use the 'addTypingEffect' attribute. A string ("") that contains a boolean. Dictates wether JavaScript is allowed to stop this elements animation. Explained more below...
+ - <b>id</b>: required for all elements that use the 'addTypingEffect' attribute. This is just the standard HTML tag, but it gives the script something to work with.
 
 Text inside the element is animated, and \<br>s are rendered as they should be. <b>Other child tags/elements will be written out!</b>
 
