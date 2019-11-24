@@ -1,5 +1,11 @@
 //This version has not been minified. Same details apply as 'typingEffect.js'.
 
+///////////////////////////////////////
+//         typingEffect.js.          //
+// Include credit in re-distribution //
+//        Thanks for using!          //
+///////////////////////////////////////
+
 function typeWrite() {
     window.animateData = [];
     window.i = [];
@@ -17,6 +23,7 @@ function typeWrite() {
         }
     });
     animateData.forEach(function(x, index) {
+		document.getElementById(x[0]["id"]).setAttribute("typingAnimating","true");
         if (x[4] == !1) {
             x[0].innerHTML = "";
             window.i[index] = 0;
@@ -25,12 +32,13 @@ function typeWrite() {
                     clearInterval(window.clock[index]);
                     setTimeout(function() {
                         if (typeof typingEffectStopped === "function") {
+							document.getElementById(x[0]["id"]).setAttribute("typingAnimating","false");
                             typingEffectStopped(x[0])
                         } else {
                             console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.")
                         }
                     }, 10)
-                } else if (x[5] == !1 && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
+                } else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
                     console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.")
                 }
                 if (i[index] < x[1].length) {
@@ -54,9 +62,15 @@ function typeWrite() {
     })
 }
 
-function stopAnimation(elementId) {
-    document.getElementById(elementId).removeAttribute("addTypingEffect");
-    console.log("Awaiting Detection...")
+function stopAnimation(elementId){
+	if (document.getElementById(elementId).getAttribute("typingAnimating")=="true")
+	{
+		 document.getElementById(elementId).removeAttribute("addTypingEffect");
+	}
+	else
+	{
+		console.log("Element is not being currently animated.")
+	}
 }
 
 function loopPrintText(x, index) {
@@ -68,12 +82,13 @@ function loopPrintText(x, index) {
             clearInterval(window.outerClock[index]);
             setTimeout(function() {
                 if (typeof typingEffectStopped === "function") {
+					document.getElementById(x[0]["id"]).setAttribute("typingAnimating","false");
                     typingEffectStopped(x[0])
                 } else {
                     console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.")
                 }
             }, 10)
-        } else if (x[5] == !1 && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
+        } else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
             console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.")
         }
         if (i[index] < x[1].length) {
