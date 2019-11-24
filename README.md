@@ -1,6 +1,8 @@
 # typingEffect.js Library
 A small, super-easy to use, functional, pure JS and HTML library that animates text as if it was being written.
-To get started, download the typingEffect.js file and use the HTML <script> tag to import it. <b>You also require the jQuery library!</b>
+
+To get started, download the typingEffect.js file and use the HTML <script> tag to import it. Alternatively, link the <script> tag to "https://raw.githubusercontent.com/TheLukaBoss/typingEffect/master/typingEffect.js".
+<br>You also require the jQuery library at "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js".
 
 A list of attributes you can give elements that you want to animate is below:
  - <b>addTypingEffect</b>: required for all elements that you would like the text inside to be animated. Don't worry, \<br>s are taken into account! This attribute does not need a value.
