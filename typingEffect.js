@@ -1,8 +1,8 @@
-//////////////////////////////
-//     typingEffect.js	    //
-//   Do not redistribute.   //
-//    Thanks for using!     //
-//////////////////////////////
+////////////////////////////////////////
+//        typingEffect.js.            //
+//Include credit in re-distribution   //
+//       Thanks for using!            //
+////////////////////////////////////////
 
 function typeWrite(){window.animateData=[];window.i=[];window.clock=[];window.outerClock=[];getAllElementsWithAttribute("addTypingEffect").forEach(function(x)		{window.animateData.push([x,x.innerHTML,(parseFloat(x.getAttribute("typingSpeed"))*1000),getIndicesOf("<br>",x.innerHTML,!1),x.getAttribute("typingLoop"),$.parseJSON(x.getAttribute("typingStopAllow").toLowerCase())]);if(animateData[animateData.length-1][4]=="false")
 {animateData[animateData.length-1][4]=!1}
