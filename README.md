@@ -3,6 +3,8 @@ A small, super-easy to use, functional, standalone, pure JavaScript library that
 
 ## Get Started
 To get started, download the 'typingEffect.js' file and use the HTML <script> tag to import it. That's it!
+<br><br>
+If the page might be out of focus for longer than 5 seconds, say the user is on another tab, some features could be broken due to browser tick throttling . Check out this: https://github.com/turuslan/HackTimer to solve this issue. There is nothing my script can do apart from copy the linked script.
 
 ## Demo
 Before you learn how to use this library, you may want to see a demo! Click this link to be directed to one: http://lnps.co.uk/customLibraries/customWriting/demo.html. Use the console to have a look at the script.
@@ -27,3 +29,4 @@ You must keep the 'window' objects: animateData, i, clock & outerClock free from
  - User Created <b>typingEffectStopped(element)</b>: this function must be created by the user of this script. When an animation is stopped successfully, this function will be attempted to be called. If this function does exist, and the call is successfull, 'element' becomes the overall element that was stopped. To get the 'id' of the element (this is strongly recommended), use <code>element["id"]</code>. It is safe to change the innerHTML property inside this function: <code>document.getElementById(element["id"]).innerHTML="New Text"</code>. If you need to deal with more than one stoppage, use an if statement to compare the 'element'.<br>For example, to change the content being written: <code>stopAnimation(elementId); function typingEffectStopped(element){document.getElementById(element["id"]).innerHTML="New Text"; document.getElementById(element["id"]).setAttribute("addTypingEffect",""); typeWrite();}</code>
 
 ## Thanks for using this library!
+Please leave a star if you found it useful or if you liked it!
