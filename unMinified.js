@@ -13,7 +13,7 @@ function typeWrite() {
             animateData[animateData.length - 1][4] = parseFloat(animateData[animateData.length - 1][4]) * 1000
         }
         if (JSON.parse(x.getAttribute("typingKeepHeight").toLowerCase())) {
-            x.style.height = parseFloat(getComputedStyle(x, null).height.replace("px", ""))
+            x.style.height = parseFloat(getComputedStyle(x, null).height.replace("px", ""))+"px"
         }
     });
     animateData.forEach(function(x, index) {
