@@ -1,4 +1,4 @@
-# typingEffect.js
+# typingEffect.js Library
 A small, super-easy to use, functional, pure JS and HTML library that animates text as if it was being written.
 To get started, download the typingEffect.js file and use the HTML <script> tag to import it. <b>You also require the jQuery library!</b>
 
@@ -14,8 +14,8 @@ Text inside the element is animated, and \<br>s are rendered as they should be. 
 
 <b>How to use JavaScript with this libray</b>:
 <br>You must keep the 'window' objects: animateData, i, clock & outerClock free from use throughout your JavaScript. You must have the jQuery library installed.
-<br>To kick off the animations, call typeWrite(). This will immediately start all typing animations with their options.
-<br>To stop <i>one element's animation</i>, if you need to change the content for example (attempting to change innerHTML without stopping the animation will result in the new text being overridden), use the removeAttribute() function to remove the 'addTypingEffect' attribute from the element you want to stop. If the 'typingStopAllow' is set to false, the typing animation will not stop. If it is set to true, then the typing will stop. A function called 'typingEffectStopped(element)' will be attemepted to be called, and if it exists, 'element' becomes the HTML element that the typing has stopped in. If it does not exist, nothing will happen. <i>Do not attempt to change any innerHTML of an animated element outside of this function. By writing innerHTML in this function, it is definite that the changes will be kept.</i>. If you need to deal with more than one stoppage, use an if statement to compare the 'element'. An example usage to change what is typed is below:
+<br>To kick off the animations, call <code>typeWrite()</code>. This will immediately start all typing animations with their options.
+<br>To stop <i>one element's animation</i>, if you need to change the content for example (attempting to change innerHTML without stopping the animation will result in the new text being overridden), use the original JavaScript function <code>removeAttribute()</code> to remove the 'addTypingEffect' attribute from the element you want to stop. If the 'typingStopAllow' is set to false, the typing animation will not stop. If it is set to true, then the typing will stop. A function called 'typingEffectStopped(element)' will be attemepted to be called, and if it exists, 'element' becomes the HTML element that the typing has stopped in. If it does not exist, nothing will happen. <i>Do not attempt to change any innerHTML of an animated element outside of this function. By writing innerHTML in this function, it is definite that the changes will be kept.</i>. If you need to deal with more than one stoppage, use an if statement to compare the 'element'. An example usage to change what is typed is below:
 <br><code>element.innerHTML = "New Text";
 			document.getElementById(element["id"]).setAttribute("addTypingEffect","");
-			typeWrite();</code>.<br><br>Thanks for using this library!
+			typeWrite();</code>.<br><br>Thanks for using this library!<br>#typing-effect<br>#jquery<br>#type-writer<br>#effects<br>#javascript<br>#html
