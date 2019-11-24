@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>DEMO: typingEffect.js</title>
+		<script src="http://lnps.co.uk/customLibraries/customWriting/typingEffect.js"></script>
+	</head>
+	<body>
+		<p id="example" addTypingEffect typingSpeed="0.025" typingLoop="2" typingKeepHeight="false" typingStopAllow="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus ipsum magna, a vestibulum enim placerat quis. Maecenas semper nec enim non ornare. Proin rutrum dui vitae condimentum maximus. Nulla facilisi. Nullam a nisi egestas, imperdiet lacus eget, iaculis augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae congue risus. Suspendisse sollicitudin at eros eget posuere. Sed sed nulla ante. Nam ac lorem vitae nisi posuere efficitur. Duis nec diam consequat, semper tortor eu, congue augue. Maecenas eget nulla magna. Cras arcu ante, lobortis non scelerisque commodo, fringilla egestas felis. Integer ultricies libero eros, vitae ullamcorper risus ornare.</p>
+		<button onclick="typeWrite()">Start Typing</button><br><button onclick="stopAnimation('example')">Replace text</button>
+		<script>
+		function typingEffectStopped(element)
+		{
+			var id = element["id"];
+			document.getElementById(id).innerHTML="Aenean vel ullamcorper lectus. Aliquam et efficitur enim. Nulla sodales sodales sem congue feugiat. Maecenas rhoncus molestie enim. Nunc convallis sodales ultrices. Ut luctus metus est, id iaculis quam maximus efficitur. Nam ut erat ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi faucibus, ipsum nec efficitur fermentum, metus metus molestie tellus, vitae porta velit dui nec purus. Pellentesque id mauris lobortis felis eleifend tempus eu eu nibh. Donec vel diam sit amet nisl venenatis ornare. Quisque porta diam eget aliquet ultricies. Vestibulum ut tempus erat, quis vestibulum quam. Proin tincidunt semper auctor. Integer vitae magna commodo tellus finibus.";
+			document.getElementById(id).setAttribute("addTypingEffect","");
+			typeWrite();
+		}
+		</script>
+	</body>
+</html>	
