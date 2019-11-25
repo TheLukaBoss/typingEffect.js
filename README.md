@@ -25,7 +25,7 @@ A list of attributes you can give elements that you want to animate is as follow
 Text inside the element is animated, and \<br>s are rendered as they should be. <b>Other child tags/elements will be written out!</b>
 
 ## JavaScript Usage
-You must keep the 'window' objects: animateData, i, clock & outerClock free from use throughout your JavaScript. You cannot define any (except the last one) of the functions below.
+You must keep the 'window' objects: animateData, i, clock, outerClock, backspaceClock & wellKnownTypingEffect free from use throughout your JavaScript. You cannot define any (except the last one) of the functions below.
 <br>
  - <b>typeWrite()</b>: this function will immediately start all typing animations with their appropriate options as listed above in the HTML Setup section.
  - <b>stopAnimation(id)</b>: this function will attempt to stop the typing animation of the given id's element. This must be called before attempting to change the innerHTML of an animated object. If the 'typingStopAllow' is set to false, the typing animation will not stop and a warning will be raised in the console. If it is set to true, then the typing will stop. Read about the next function to handle the element when typing stops...
