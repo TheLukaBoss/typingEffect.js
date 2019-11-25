@@ -1,9 +1,10 @@
-//This version has not been minified. Same details apply as 'typingEffect.js'.
+//This version has not been minified. For production, use the 'typingEffect.js', as it has been minified.
 
 ///////////////////////////////////////
 //         typingEffect.js.          //
 // Include credit in re-distribution //
 //        Thanks for using!          //
+//        Unminified Version         //
 ///////////////////////////////////////
 
 function typeWrite() {
@@ -11,13 +12,21 @@ function typeWrite() {
     window.i = [];
     window.clock = [];
     window.outerClock = [];
+	window.backspaceClock = [];
+	
     getAllElementsWithAttribute("addTypingEffect").forEach(function(x) {
-        window.animateData.push([x, x.innerHTML, (parseFloat(x.getAttribute("typingSpeed")) * 1000), getIndicesOf("<br>", x.innerHTML, !1), x.getAttribute("typingLoop"), JSON.parse(x.getAttribute("typingStopAllow").toLowerCase())]);
+        window.animateData.push([x, x.innerHTML, (parseFloat(x.getAttribute("typingSpeed")) * 1000), getIndicesOf("<br>", x.innerHTML, !1), x.getAttribute("typingLoop"), JSON.parse(x.getAttribute("typingStopAllow").toLowerCase()),x.getAttribute("typingBackspace")]);
         if (animateData[animateData.length - 1][4] == "false") {
             animateData[animateData.length - 1][4] = !1
         } else {
             animateData[animateData.length - 1][4] = parseFloat(animateData[animateData.length - 1][4]) * 1000
         }
+		if (animateData[animateData.length - 1][6] == "false") {
+            animateData[animateData.length - 1][6] = !1
+        } else {
+            animateData[animateData.length - 1][6] = parseFloat(animateData[animateData.length - 1][6]) * 1000
+        }
+		
         if (JSON.parse(x.getAttribute("typingKeepHeight").toLowerCase())) {
             x.style.height = parseFloat(getComputedStyle(x, null).height.replace("px", ""))+"px"
         }
@@ -56,10 +65,41 @@ function typeWrite() {
         } else {
             loopPrintText(x, index);
             window.outerClock[index] = setInterval(function() {
-                loopPrintText(x, index)
-            }, x[4] + (x[2] * (x[1].length)))
+                loopPrintText(x, index);
+            }, x[4] + (x[2] * (x[1].length)) + (x[6]==false?0:(x[2] * (x[1].length))+x[6]))
         }
-    })
+    });
+}
+
+function backspaceAll(x,index){
+	//console.log("hey");
+	var y = x[1].length;
+	setTimeout(function(){
+		window.backspaceClock[index] = setInterval(function(){
+			if (x[5] && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null){
+				clearInterval(window.backspaceClock);
+				setTimeout(function(){
+					if (typeof typingEffectStopped === "function"){
+						document.getElementById(x[0]["id"]).setAttribute("typingAnimating","false");
+						typingEffectStopped(x[0])
+					} else {
+						console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.")
+					}
+				}, 10)
+			} else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
+				console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.")
+			}
+			str = document.getElementById(x[0].id).innerHTML;
+			str = str.substring(0, str.length - 1);
+			document.getElementById(x[0]["id"]).innerHTML=str;
+			if(y == 0){
+				clearInterval(window.backspaceClock);
+			}
+			else{
+				y--;
+			}
+		},x[2])
+	},x[6])
 }
 
 function stopAnimation(elementId){
@@ -100,7 +140,10 @@ function loopPrintText(x, index) {
                 i[index]++
             }
         } else {
-            clearInterval(clock)
+            clearInterval(clock);
+			if (x[6]!=false){
+				backspaceAll(x,index);
+			}
         }
     }, x[2])
 }
