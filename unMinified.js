@@ -7,12 +7,19 @@
 //        Unminified Version         //
 ///////////////////////////////////////
 
+///////////////////////////////////////
+//         typingEffect.js.          //
+// Include credit in re-distribution //
+//        Thanks for using!          //
+///////////////////////////////////////
+
 function typeWrite() {
     window.animateData = [];
     window.i = [];
     window.clock = [];
     window.outerClock = [];
 	window.backspaceClock = [];
+	window.wellKnownTypingEffect = {};
 	
     getAllElementsWithAttribute("addTypingEffect").forEach(function(x) {
         window.animateData.push([x, x.innerHTML, (parseFloat(x.getAttribute("typingSpeed")) * 1000), getIndicesOf("<br>", x.innerHTML, !1), x.getAttribute("typingLoop"), JSON.parse(x.getAttribute("typingStopAllow").toLowerCase()),x.getAttribute("typingBackspace")]);
@@ -33,23 +40,12 @@ function typeWrite() {
     });
     window.animateData.forEach(function(x, index) {
 		document.getElementById(x[0].id).setAttribute("typingAnimating","true");
+		window.wellKnownTypingEffect[x[0].id+"_index"] = index;
+		window.wellKnownTypingEffect[x[0].id+"_elementContents"] = x;
         if (x[4] == false) {
             x[0].innerHTML = "";
             window.i[index] = 0;
             window.clock[index] = setInterval(function() {
-                if (x[5] && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
-                    clearInterval(window.clock[index]);
-                    setTimeout(function() {
-                        if (typeof typingEffectStopped === "function") {
-							document.getElementById(x[0].id).setAttribute("typingAnimating","false");
-                            typingEffectStopped(x[0]);
-                        } else {
-                            console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.");
-                        }
-                    }, 10);
-                } else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
-                    console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.");
-                }
                 if (window.i[index] < x[1].length) {
                     if (x[3].includes(window.i[index])) {
                         x[0].innerHTML += "<br>";
@@ -76,24 +72,11 @@ function backspaceAll(x,index){
 	var str;
 	setTimeout(function(){
 		window.backspaceClock[index] = setInterval(function(){
-			if (x[5] && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null){
-				clearInterval(window.backspaceClock);
-				setTimeout(function(){
-					if (typeof typingEffectStopped === "function"){
-						document.getElementById(x[0].id).setAttribute("typingAnimating","false");
-						typingEffectStopped(x[0]);
-					} else {
-						console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.");
-					}
-				}, 10);
-			} else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
-				console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.");
-			}
 			str = document.getElementById(x[0].id).innerHTML;
 			str = str.substring(0, str.length - 1);
 			document.getElementById(x[0].id).innerHTML=str;
 			if(y == 0){
-				clearInterval(window.backspaceClock);
+				clearInterval(window.backspaceClock[index]);
 			}
 			else{
 				y--;
@@ -105,11 +88,27 @@ function backspaceAll(x,index){
 function stopAnimation(elementId){
 	if (document.getElementById(elementId).getAttribute("typingAnimating")=="true")
 	{
-		 document.getElementById(elementId).removeAttribute("addTypingEffect");
+		if (window.wellKnownTypingEffect[elementId+"_elementContents"][5] == false){
+			console.warn("This element was told to stop, however the 'typingStopAllow' attribute was set to 'false'. This element's writing effect has not stopped.");
+		}
+		else{
+			clearInterval(window.clock[window.wellKnownTypingEffect[elementId+"_index"]]);
+			clearInterval(window.outerClock[window.wellKnownTypingEffect[elementId+"_index"]]);
+			clearInterval(window.backspaceClock[window.wellKnownTypingEffect[elementId+"_index"]]);
+			document.getElementById(elementId).removeAttribute("addTypingEffect");
+			document.getElementById(elementId).setAttribute("typingAnimating","false");
+			
+			setTimeout(function(){
+				if (typeof typingEffectStopped === "function"){
+					typingEffectStopped(window.wellKnownTypingEffect[elementId+"_elementContents"][0]);
+				} else {
+					console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.");
+				}
+			}, 10);
+		}
 	}
-	else
-	{
-		console.log("Element is not being currently animated.");
+	else{
+		console.warn("Element is not being animated currently. Use the 'typingAnimating' of the property to check: if it is 'true' it is being animated.");
 	}
 }
 
@@ -117,20 +116,6 @@ function loopPrintText(x, index) {
     x[0].innerHTML = "";
     window.i[index] = 0;
     window.clock[index] = setInterval(function() {
-        if (x[5] && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
-            clearInterval(window.clock[index]);
-            clearInterval(window.outerClock[index]);
-            setTimeout(function() {
-                if (typeof typingEffectStopped === "function") {
-					document.getElementById(x[0].id).setAttribute("typingAnimating","false");
-                    typingEffectStopped(x[0]);
-                } else {
-                    console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.");
-                }
-            }, 10);
-        } else if (x[5] == false && document.getElementById(x[0].id).getAttribute("addTypingEffect") == null) {
-            console.warn("This element was told to stop, however the typingStopAllow attribute was set to 'false'. This writing effect has not stopped.");
-        }
         if (window.i[index] < x[1].length) {
             if (x[3].includes(window.i[index])) {
                 x[0].innerHTML += "<br>";
