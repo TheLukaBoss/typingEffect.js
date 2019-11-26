@@ -4,10 +4,12 @@ A small, super-easy to use, functional, standalone, pure JavaScript library that
 ## Get Started
 To get started, download the 'typingEffect.js' file and use the HTML <script> tag to import it. That's it!
 <br><br>
-If the page might be out of focus for longer than 5 seconds, say the user is on another tab, some features could be broken due to browser tick throttling . Check out this: https://github.com/turuslan/HackTimer to solve this issue. There is nothing my script can do apart from copy the linked script.
+If the page might be out of focus for longer than 5 seconds, say the user is on another tab, some features could be broken due to browser tick throttling . Check out this <a href="https://github.com/turuslan/HackTimer" target="_blank">repo</a> to solve this issue. There is nothing my script can do apart from copy the linked script.
+<br><br>
+Browsers and PCs may not be able to handle many elements being animated at once, mainly due to the script being based on timings and JavaScript being a synchronous language.
 
 ## Demo
-Before you learn how to use this library, you may want to see a demo! Click this link to be directed to one: http://lnps.co.uk/customLibraries/customWriting/demo.html. Use the console to have a look at the script.
+Before you learn how to use this library, you may want to see a demo! Click this link to be directed to one: <a href="http://lnps.co.uk/customLibraries/customWriting/demo.html" target="_blank">demo</a>. Use the console to have a look at the script. Demo being improved soon!
 
 ## HTML Setup
 A list of attributes you can give elements that you want to animate is as follows:
@@ -28,8 +30,22 @@ Text inside the element is animated, and \<br>s are rendered as they should be. 
 You must keep the 'window' objects: animateData, i, clock, outerClock, backspaceClock & wellKnownTypingEffect free from use throughout your JavaScript. You cannot define any (except the last one) of the functions below.
 <br>
  - <b>typeWrite()</b>: this function will immediately start all typing animations with their appropriate options as listed above in the HTML Setup section.
- - <b>stopAnimation(id)</b>: this function will attempt to stop the typing animation of the given id's element. This must be called before attempting to change the innerHTML of an animated object. If the 'typingStopAllow' is set to false, the typing animation will not stop and a warning will be raised in the console. If it is set to true, then the typing will stop. Read about the next function to handle the element when typing stops...
- - User Created <b>typingEffectStopped(element)</b>: this function must be created by the user of this script. When an animation is stopped successfully, this function will be attempted to be called. If this function does exist, and the call is successfull, 'element' becomes the overall element that was stopped. To get the 'id' of the element (this is strongly recommended), use <code>element["id"]</code>. It is safe to change the innerHTML property inside this function: <code>document.getElementById(element["id"]).innerHTML="New Text"</code>. If you need to deal with more than one stoppage, use an if statement to compare the 'element'.<br>For example, to change the content being written: <code>stopAnimation(elementId); function typingEffectStopped(element){document.getElementById(element["id"]).innerHTML="New Text"; document.getElementById(element["id"]).setAttribute("addTypingEffect",""); typeWrite();}</code>
+ - <b>stopAnimation(id, replaceValue)</b>: this function will attempt to stop the typing animation of the given id's element. It is a promise. If the 'typingStopAllow' is set to false, the typing animation will not stop and the promise will throw an error. If it is set to true, then the typing will stop, with a success array as output. The replaceValue can be set to false or a string. If set to false, then the animation will stop, and the text will not change. Providing a string will change the typing text and restart the animation with the new text automatically. The success array is [elementStopped, (true/false based on replaceValue)]. Example:<br><code>stopAnimation("example", "New Text")</code><br><code>
+			.then(function(result)</code><br><code>
+			{</code><br><code>
+			 	 alert("Writing Changed Or Stopped!");</code><br><code>
+			  	alert(result[0]);</code><br><code>
+			  	alert(result[1]);</code><br><code>
+			})</code><br><code>
+			.catch(function(error)</code><br><code>
+			{</code><br><code>
+				  alert(error);</code><br><code>
+			});</code>
+
+## Next Planned Features
+ - Improved Demo Page
+ - Cursor Option
+ - Encapsulation
 
 ## Thanks for using this library!
-Please leave a star if you found it useful or if you liked it!
+Please leave a star if you found it useful or if you liked it! Don't forget to watch for updates!
