@@ -7,12 +7,6 @@
 //        Unminified Version         //
 ///////////////////////////////////////
 
-///////////////////////////////////////
-//         typingEffect.js.          //
-// Include credit in re-distribution //
-//        Thanks for using!          //
-///////////////////////////////////////
-
 function typeWrite() {
     window.animateData = [];
     window.i = [];
@@ -85,31 +79,30 @@ function backspaceAll(x,index){
 	},x[6]);
 }
 
-function stopAnimation(elementId){
-	if (document.getElementById(elementId).getAttribute("typingAnimating")=="true")
-	{
-		if (window.wellKnownTypingEffect[elementId+"_elementContents"][5] == false){
-			console.warn("This element was told to stop, however the 'typingStopAllow' attribute was set to 'false'. This element's writing effect has not stopped.");
-		}
-		else{
+function stopAnimation(elementId, replaceValue){
+  return new Promise(function(resolve, reject) {
+		if (typeof window.wellKnownTypingEffect == "undefined"){
+			reject(new Error("Animations Not Started"));
+		}else if (document.getElementById(elementId) == null){
+			reject(new Error("Element Does Not Exist"));
+		}else if (document.getElementById(elementId).getAttribute("typingAnimating")=="false"){
+			reject(new Error("Element Is Not Being Animated"));
+		}else if (window.wellKnownTypingEffect[elementId+"_elementContents"][5] == false){
+			reject(new Error("Element Not Allowed To Stop"));
+		}else{
 			clearInterval(window.clock[window.wellKnownTypingEffect[elementId+"_index"]]);
 			clearInterval(window.outerClock[window.wellKnownTypingEffect[elementId+"_index"]]);
 			clearInterval(window.backspaceClock[window.wellKnownTypingEffect[elementId+"_index"]]);
-			document.getElementById(elementId).removeAttribute("addTypingEffect");
 			document.getElementById(elementId).setAttribute("typingAnimating","false");
-			
-			setTimeout(function(){
-				if (typeof typingEffectStopped === "function"){
-					typingEffectStopped(window.wellKnownTypingEffect[elementId+"_elementContents"][0]);
-				} else {
-					console.warn("Create a function called 'typingEffectStopped(element)' to execute code once the effect has stopped.");
-				}
-			}, 10);
+			if (replaceValue != false){
+				document.getElementById(elementId).innerHTML = replaceValue;
+				typeWrite();
+			}else{
+				document.getElementById(elementId).removeAttribute("addTypingEffect");
+			}
+			resolve([window.wellKnownTypingEffect[elementId+"_elementContents"][0],(replaceValue==false?false:true)]);
 		}
-	}
-	else{
-		console.warn("Element is not being animated currently. Use the 'typingAnimating' of the property to check: if it is 'true' it is being animated.");
-	}
+	});
 }
 
 function loopPrintText(x, index) {
