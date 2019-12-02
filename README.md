@@ -43,9 +43,8 @@ You must keep the 'window' objects: animateData, i, clock, outerClock, backspace
 			});</code>
 
 ## Next Planned Features
- - Improved Demo Page
- - Cursor Option
- - Encapsulation
+ - Flashing Cursor Option (In Work Now)
+ - Encapsulation (<i>please help and give examples, maybe pull request</i>)
 
 ## Thanks for using this library!
 Please leave a star if you found it useful or if you liked it! Don't forget to watch for updates!
