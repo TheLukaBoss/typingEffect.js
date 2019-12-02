@@ -1,19 +1,159 @@
 <html>
 	<head>
 		<title>DEMO: typingEffect.js</title>
-		<script src="http://lnps.co.uk/customLibraries/customWriting/typingEffect.js"></script>
-	</head>
-	<body>
-		<p id="example" addTypingEffect typingSpeed="0.025" typingLoop="2" typingKeepHeight="true" typingStopAllow="true">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tempus ipsum magna, a vestibulum enim placerat quis. Maecenas semper nec enim non ornare. Proin rutrum dui vitae condimentum maximus. Nulla facilisi. Nullam a nisi egestas, imperdiet lacus eget, iaculis augue. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae congue risus. Suspendisse sollicitudin at eros eget posuere. Sed sed nulla ante. Nam ac lorem vitae nisi posuere efficitur. Duis nec diam consequat, semper tortor eu, congue augue. Maecenas eget nulla magna. Cras arcu ante, lobortis non scelerisque commodo, fringilla egestas felis. Integer ultricies libero eros, vitae ullamcorper risus ornare.</p>
-		<button onclick="typeWrite()">Start Typing</button><br><button onclick="stopAnimation('example')">Replace text</button>
+		<script src="http://lnps.co.uk/customLibraries/customWriting/unMinified.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://lnps.co.uk/indexstyle.css">
+		<style>
+			#loop, #back
+			{
+				display: flex;
+				justify-content: space-between;
+			}
+		</style>
 		<script>
-		function typingEffectStopped(element)
+		function construct()
 		{
-			var id = element["id"];
-			document.getElementById(id).innerHTML="Aenean vel ullamcorper lectus. Aliquam et efficitur enim. Nulla sodales sodales sem congue feugiat. Maecenas rhoncus molestie enim. Nunc convallis sodales ultrices. Ut luctus metus est, id iaculis quam maximus efficitur. Nam ut erat ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi faucibus, ipsum nec efficitur fermentum, metus metus molestie tellus, vitae porta velit dui nec purus. Pellentesque id mauris lobortis felis eleifend tempus eu eu nibh. Donec vel diam sit amet nisl venenatis ornare. Quisque porta diam eget aliquet ultricies. Vestibulum ut tempus erat, quis vestibulum quam. Proin tincidunt semper auctor. Integer vitae magna commodo tellus finibus.";
-			document.getElementById(id).setAttribute("addTypingEffect","");
-			typeWrite();
+			return "<p id='test' addTypingEffect typingSpeed='"+document.getElementById("speed").value+"' typingLoop='"+(document.getElementById("loopcheck").checked?document.getElementById("loopinput").value:"false")+"' typingBackspace='"+(document.getElementById("backcheck").checked?document.getElementById("backinput").value:"false")+"' typingKeepHeight='"+document.getElementById("linecheck").checked+"' typingStopAllow='"+document.getElementById("stopcheck").checked+"'> Your Text Here </p>"
+		}
+		
+		function speedChange()
+		{
+			if (document.getElementById("speed").value > 5 || document.getElementById("speed").value < 0.05)
+			{
+				document.getElementById("speedwarn").style.display = "block";
+			}
+			else
+			{
+				document.getElementById("speedwarn").style.display = "none";
+				document.getElementById("shown").innerHTML = construct();
+			}
+		}
+		
+		function loopChange()
+		{
+			if (document.getElementById("loopcheck").checked)
+			{
+				if (document.getElementById("loopinput").value > 20 || document.getElementById("loopinput").value < 0.5)
+				{
+					document.getElementById("loopwarn").style.display = "block";
+				}
+				else
+				{
+					document.getElementById("loopwarn").style.display = "none";
+					document.getElementById("shown").innerHTML = construct();
+				}
+			}
+			else
+			{
+				document.getElementById("loopwarn").style.display = "none";
+				document.getElementById("backcheck").checked = false;
+				document.getElementById("backwarn").style.display = "none";
+				document.getElementById("shown").innerHTML = construct();
+			}
+		}
+		
+		function backChange()
+		{
+			if (document.getElementById("loopcheck").checked)
+			{
+				if (document.getElementById("backcheck").checked)
+				{
+					if (document.getElementById("backinput").value > 20 || document.getElementById("backinput").value < 0.5)
+					{
+						document.getElementById("backwarn").style.display = "block";
+					}
+					else
+					{
+						document.getElementById("backwarn").style.display = "none";
+						document.getElementById("shown").innerHTML = construct();
+					}
+				}
+				else
+				{
+					document.getElementById("backwarn").style.display = "none";
+					document.getElementById("shown").innerHTML = construct();
+				}
+			}
+			else
+			{
+				document.getElementById("backcheck").checked = false;
+				document.getElementById("shown").innerHTML = construct();
+			}
+		}
+
+		function lineChange()
+		{
+			document.getElementById("shown").innerHTML = construct();
+		}
+		
+		function stopChange()
+		{
+			document.getElementById("shown").innerHTML = construct();
+		}
+
+		function goType()
+		{
+			if (document.getElementById("speedwarn").style.display == "none" && document.getElementById("loopwarn").style.display == "none" && document.getElementById("backwarn").style.display == "none")
+			{
+				document.getElementById("example").innerHTML = "<p id='test' addTypingEffect typingSpeed='"+document.getElementById("speed").value+"' typingLoop='"+(document.getElementById("loopcheck").checked?document.getElementById("loopinput").value:"false")+"' typingBackspace='"+(document.getElementById("backcheck").checked?document.getElementById("backinput").value:"false")+"' typingKeepHeight='"+document.getElementById("linecheck").checked+"' typingStopAllow='"+document.getElementById("stopcheck").checked+"'> This typing animation is really cool, why not share it with your friends today. Talking of today, what are you doing? I'm going to sit here and wait for more good people like you to come and play with me. Maybe one day ill get a promotion.<br><br>Still here? How kind of you! Thanks for playing with me! </p>"
+				
+				typeWrite()
+				document.getElementById("goGo").style.display = "none";
+				document.getElementById("goR").style.display = "inline-block";
+			}
+			else
+			{
+				alert("Ensure that there are no warnings before continuing.\nTyping has not started due to some validation conditions not being met.")
+			}
+		}
+
+		function goReplace()
+		{
+			stopAnimation("test", "Aenean vel ullamcorper lectus. Aliquam et efficitur enim. Nulla sodales sodales sem congue feugiat. Maecenas rhoncus molestie enim. Nunc convallis sodales ultrices. Ut luctus metus est, id iaculis quam maximus efficitur. Nam ut erat ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi faucibus, ipsum nec efficitur fermentum, metus metus molestie tellus, vitae porta velit dui nec purus. Pellentesque id mauris lobortis felis eleifend tempus eu eu nibh. Donec vel diam sit amet nisl venenatis ornare. Quisque porta diam eget aliquet ultricies. Vestibulum ut tempus erat, quis vestibulum quam. Proin tincidunt semper auctor. Integer vitae magna commodo tellus finibus.")
+			.then(function(result)
+			{
+				document.getElementById("goR").style.display = "none";
+			})
+			.catch(function(error)
+			{
+				alert(error);
+			});
 		}
 		</script>
+	</head>
+	<body>
+		<h1><u>Example Text & Animation</u></h1>
+		<div id="example">
+			<p>Text will appear here...</p>
+		</div>
+		<br><br><br>
+		<h1><u>Options</u></h1>
+		<input id="speed" type="number" placeholder="Enter Typing Speed In Seconds" step="0.01" oninput="speedChange()"></input>
+		<p style="color:red;" id="speedwarn">This value is required & must be between 0.05 and 5 seconds</p>
+		<hr>
+		<div id="loop" style="width:100%">
+			<div style="width:10%">
+			<input id="loopcheck" type="checkbox" onchange="loopChange()"> <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable Loop</div></input>
+			</div>
+			<input id="loopinput" type="number" placeholder="Enter Loop Wait In Seconds" step="0.5" onchange="loopChange()"></input>
+			<p style="color:red;display:none" id="loopwarn">This value is required (if loop is enabled) & must be between 0.5 and 20 seconds</p>
+		</div>
+		<hr>
+		<div id="back" style="width:100%">
+			<div style="width:10%">
+			<input id="backcheck" type="checkbox"  onchange="backChange()"> <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable Backspace</div></input>
+			</div>
+			<input id="backinput" type="number" step="0.5" placeholder="Enter Backspace Wait In Seconds" onchange="backChange()"></input>
+			<p style="color:red;display:none" id="backwarn">This value is required (if backspace & loop are enabled) & must be between 0.5 and 20 seconds</p>
+		</div>
+		<hr>
+		<input id="linecheck" type="checkbox" onchange="lineChange()"> <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable Pre-Calculated Height</div></input>
+		<hr>
+		<input id="stopcheck" type="checkbox" onchange="stopChange()" > <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable JavaScript Stopping & Replacing</div></input>
+		<hr>
+		<textarea disabled id="shown" style="width:99%;border-radius:5px;text-align:center;position:relative;text-align:center; font-family:'Arial';font-size:15px; left:0.5%; padding:10px;" rows="1">Code Example Will Appear Here</textarea>
+		<hr>
+		<div id="goGo" onclick="goType()" style="width: 99%;padding: 10px 10px;margin: 8px 3px;display: inline-block;border: 2px solid #ccc;box-sizing: border-box;border-radius:5px;text-align:center;position:relative;text-align:center; font-family:'Arial';font-size:15px;"><b>Start Typing With New Settings</b></div>
+		<div id="goR" onclick="goReplace()" style="width: 99%;padding: 10px 10px;margin: 8px 3px;display: none;border: 2px solid #ccc;box-sizing: border-box;border-radius:5px;text-align:center;position:relative;text-align:center; font-family:'Arial';font-size:15px;"><b> Replace Text With New Text (No Options Changed)<br>To change options, refresh this page.</b></div>
 	</body>
 </html>	
