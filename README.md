@@ -22,7 +22,7 @@ A list of attributes you can give elements that you want to animate is as follow
 <br><br>
  - <b>id</b>: required for all elements that use the 'addTypingEffect' attribute. This is just the standard HTML tag, but it gives the script something to work with.
  <br><br>
- - <b>typingAnimating</b>: <b>do not include</b>. This is a way of checking if the element is being animated, before calling <code>stopAnimation(id)</code>. If it is 'false' or undefined/null, then the element is not being animated. Calling <code>stopAnimation(id)</code> will not call the <code>typingEffectStopped(element)</code> function if this property is not true. 
+ - <b>typingAnimating</b>: <b>do not include</b>. This is a way of checking if the element is being animated, before calling <code>stopAnimation()</code>. If it is 'false' or undefined/null, then the element is not being animated. Calling <code>stopAnimation()</code> will return an error if this value is not 'true'. 
  
 Text inside the element is animated, and \<br>s are rendered as they should be. <b>Other child tags/elements will be written out!</b>
 
