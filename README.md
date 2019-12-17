@@ -1,15 +1,15 @@
 # typingEffect.js Library
-A small, super-easy to use, functional, standalone, pure JavaScript library that animates text as if it was being typed out letter by letter. No other scripts required!
+A small, super easy-to-use, functional and standalone JavaScript library that animates text as if it was being typed out letter by letter. No other libraries required!
 
 ## Get Started
-To get started, download the 'typingEffect.js' file and use the HTML <script> tag to import it. That's it!
+To get started, download the 'typingEffect.js' file and use the HTML <script> tag to import it. That's it!<br>To use the development version, use the 'unMinifed.js' script instead.
 <br><br>
 If the page might be out of focus for longer than 5 seconds, say the user is on another tab, some features could be broken due to browser tick throttling . Check out this <a href="https://github.com/turuslan/HackTimer" target="_blank">repo</a> to solve this issue. There is nothing my script can do apart from copy the linked script.
 <br><br>
 Browsers and PCs may not be able to handle many elements being animated at once, mainly due to the script being based on timings and JavaScript being a synchronous language.
 
-## Demo
-Before you learn how to use this library, you may want to see a demo! Click this link to be directed to one: <a href="http://lnps.co.uk/customLibraries/customWriting/demo.html" target="_blank">demo</a>. Use the console to have a look at the script. Demo being improved soon!
+## Demo Page
+Before you learn how to use this library, you may want to see a demo! There is one in this repo's files, but for a live version, click this link to be directed to one: <a href="http://lnps.co.uk/customLibraries/customWriting/demo.html" target="_blank">demo</a>. Enjoy, and I hope it is useful!
 
 ## HTML Setup
 A list of attributes you can give elements that you want to animate is as follows:
@@ -22,15 +22,15 @@ A list of attributes you can give elements that you want to animate is as follow
 <br><br>
  - <b>id</b>: required for all elements that use the 'addTypingEffect' attribute. This is just the standard HTML tag, but it gives the script something to work with.
  <br><br>
- - <b>typingAnimating</b>: <b>do not include</b>. This is a way of checking if the element is being animated, before calling <code>stopAnimation()</code>. If it is 'false' or undefined/null, then the element is not being animated. Calling <code>stopAnimation()</code> will return an error if this value is not 'true'. 
+ - <b>typingAnimating</b>: <b>do not use</b>, only included in this guide for completion! This is a way of checking if the element is being animated, before calling <code>typing.stopWrite()</code>. If it is 'false' or undefined/null, then the element is not being animated. Calling <code>typing.stopWrite()</code> will return an error if this value is not 'true'. 
  
-Text inside the element is animated, and \<br>s are rendered as they should be. <b>Other child tags/elements will be written out!</b>
+Text inside the element is animated, and \<br>s are rendered as they should be. <b>Other child tags/elements will be typed out!</b>
 
 ## JavaScript Usage
-You must keep the 'window' objects: animateData, i, clock, outerClock, backspaceClock & wellKnownTypingEffect free from use throughout your JavaScript. You cannot define any (except the last one) of the functions below.
+All functions begin with <code>typing.</code>. This keeps the other scripts from getting confused with variables an functions, and is known as encapsulation. This is the only variable that must not be used anywhere else in any scripts.
 <br>
- - <b>typeWrite()</b>: this function will immediately start all typing animations with their appropriate options as listed above in the HTML Setup section.
- - <b>stopAnimation(id, replaceValue)</b>: this function will attempt to stop the typing animation of the given id's element. It is a promise. If the 'typingStopAllow' is set to false, the typing animation will not stop and the promise will throw an error. If it is set to true, then the typing will stop, with a success array as output. The replaceValue can be set to false or a string. If set to false, then the animation will stop, and the text will not change. Providing a string will change the typing text and restart the animation with the new text automatically. The success array is [elementStopped, (true/false based on replaceValue)]. Example:<br><code>stopAnimation("example", "New Text")</code><br><code>
+ - <b>typing.startWrite()</b>: this function will immediately start all typing animations with their appropriate options as listed above in the HTML Setup section. If an element does not have an 'id', then this will throw an error.
+ - <b>typing.stopWrite(id, replaceValue)</b>: this function will attempt to stop the typing animation of the given id's element. Both arguments are required. It returns a promise. If the 'typingStopAllow' is set to false, the typing animation will not stop and the promise will throw an error. If it is set to true, then the typing will stop, with a success array as output. The replaceValue argument can be set to false or a string. If set to false, then the animation will stop, and the text will not change. Providing a string will change the typing text and restart the animation with the new text automatically. The success array is [elementStopped, (true/false based on replaceValue)]. Example:<br><code>typing.stopWrite("example_element_id", "New Text")</code><br><code>
 			.then(function(result)</code><br><code>
 			{</code><br><code>
 			 	 alert("Writing Changed Or Stopped!");</code><br><code>
@@ -43,8 +43,8 @@ You must keep the 'window' objects: animateData, i, clock, outerClock, backspace
 			});</code>
 
 ## Next Planned Features
- - Flashing Cursor Option (In Work Now)
- - Encapsulation (<i>please help and give examples, maybe pull request</i>)
+ - Manual Start, start an element's animation independently (<b>currently in work</b>)
+ - Flashing Cursor Option
 
 ## Thanks for using this library!
 Please leave a star if you found it useful or if you liked it! Don't forget to watch for updates!
