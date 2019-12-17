@@ -97,7 +97,7 @@
 			{
 				document.getElementById("example").innerHTML = "<p id='test' addTypingEffect typingSpeed='"+document.getElementById("speed").value+"' typingLoop='"+(document.getElementById("loopcheck").checked?document.getElementById("loopinput").value:"false")+"' typingBackspace='"+(document.getElementById("backcheck").checked?document.getElementById("backinput").value:"false")+"' typingKeepHeight='"+document.getElementById("linecheck").checked+"' typingStopAllow='"+document.getElementById("stopcheck").checked+"'> This typing animation is really cool, why not share it with your friends today. Talking of today, what are you doing? I'm going to sit here and wait for more good people like you to come and play with me. Maybe one day ill get a promotion.<br><br>Still here? How kind of you! Thanks for playing with me! </p>"
 				
-				typeWrite()
+				typing.startWrite()
 				document.getElementById("goGo").style.display = "none";
 				document.getElementById("goR").style.display = "inline-block";
 			}
@@ -109,7 +109,7 @@
 
 		function goReplace()
 		{
-			stopAnimation("test", "Aenean vel ullamcorper lectus. Aliquam et efficitur enim. Nulla sodales sodales sem congue feugiat. Maecenas rhoncus molestie enim. Nunc convallis sodales ultrices. Ut luctus metus est, id iaculis quam maximus efficitur. Nam ut erat ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi faucibus, ipsum nec efficitur fermentum, metus metus molestie tellus, vitae porta velit dui nec purus. Pellentesque id mauris lobortis felis eleifend tempus eu eu nibh. Donec vel diam sit amet nisl venenatis ornare. Quisque porta diam eget aliquet ultricies. Vestibulum ut tempus erat, quis vestibulum quam. Proin tincidunt semper auctor. Integer vitae magna commodo tellus finibus.")
+			typing.stopWrite("test", "Aenean vel ullamcorper lectus. Aliquam et efficitur enim. Nulla sodales sodales sem congue feugiat. Maecenas rhoncus molestie enim. Nunc convallis sodales ultrices. Ut luctus metus est, id iaculis quam maximus efficitur. Nam ut erat ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi faucibus, ipsum nec efficitur fermentum, metus metus molestie tellus, vitae porta velit dui nec purus. Pellentesque id mauris lobortis felis eleifend tempus eu eu nibh. Donec vel diam sit amet nisl venenatis ornare. Quisque porta diam eget aliquet ultricies. Vestibulum ut tempus erat, quis vestibulum quam. Proin tincidunt semper auctor. Integer vitae magna commodo tellus finibus.")
 			.then(function(result)
 			{
 				document.getElementById("goR").style.display = "none";
@@ -135,7 +135,7 @@
 			<div style="width:10%">
 			<input id="loopcheck" type="checkbox" onchange="loopChange()"> <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable Loop</div></input>
 			</div>
-			<input id="loopinput" type="number" placeholder="Enter Loop Wait In Seconds" step="0.5" onchange="loopChange()"></input>
+			<input id="loopinput" type="number" placeholder="Enter Loop Wait In Seconds" step="0.5" oninput="loopChange()"></input>
 			<p style="color:red;display:none" id="loopwarn">This value is required (if loop is enabled) & must be between 0.5 and 20 seconds</p>
 		</div>
 		<hr>
@@ -143,7 +143,7 @@
 			<div style="width:10%">
 			<input id="backcheck" type="checkbox"  onchange="backChange()"> <div style="position:relative;text-align:center; font-family:'Arial';font-size:15px;">Enable Backspace</div></input>
 			</div>
-			<input id="backinput" type="number" step="0.5" placeholder="Enter Backspace Wait In Seconds" onchange="backChange()"></input>
+			<input id="backinput" type="number" step="0.5" placeholder="Enter Backspace Wait In Seconds" oninput="backChange()"></input>
 			<p style="color:red;display:none" id="backwarn">This value is required (if backspace & loop are enabled) & must be between 0.5 and 20 seconds</p>
 		</div>
 		<hr>
