@@ -4,153 +4,160 @@
 //         typingEffect.js.          //
 // Include credit in re-distribution //
 //        Thanks for using!          //
-//        Unminified Version         //
+// *Unminified Development Version*  //
 ///////////////////////////////////////
 
-function typeWrite() {
-    window.animateData = [];
-    window.i = [];
-    window.clock = [];
-    window.outerClock = [];
-	window.backspaceClock = [];
-	window.wellKnownTypingEffect = {};
-	
-    getAllElementsWithAttribute("addTypingEffect").forEach(function(x) {
-        window.animateData.push([x, x.innerHTML, (parseFloat(x.getAttribute("typingSpeed")) * 1000), getIndicesOf("<br>", x.innerHTML, !1), x.getAttribute("typingLoop"), JSON.parse(x.getAttribute("typingStopAllow").toLowerCase()),x.getAttribute("typingBackspace")]);
-        if (window.animateData[window.animateData.length - 1][4] == "false") {
-            window.animateData[window.animateData.length - 1][4] = !1;
-        } else {
-           window.animateData[window.animateData.length - 1][4] = parseFloat(window.animateData[window.animateData.length - 1][4]) * 1000;
-        }
-		if (window.animateData[window.animateData.length - 1][6] == "false") {
-            window.animateData[window.animateData.length - 1][6] = !1;
-        } else {
-            window.animateData[window.animateData.length - 1][6] = parseFloat(window.animateData[window.animateData.length - 1][6]) * 1000;
-        }
+console.log("typingEffect.js Successfully Loaded!");
+
+document.addEventListener("error", function(){console.log("There was an unknown error in typingEffect.js! Please refresh the webpage, and if that does not solve the issue, please contact us via an issue on GitHub.");});
+
+let typing =
+{
+	animateData: [],
+	i: [],
+	clock: [],
+	outerClock: [],
+	backspaceClock: [],
+	wellKnownTypingEffect: {},
 		
-        if (JSON.parse(x.getAttribute("typingKeepHeight").toLowerCase())) {
-            x.style.height = parseFloat(getComputedStyle(x, null).height.replace("px", ""))+"px";
-        }
-    });
-    window.animateData.forEach(function(x, index) {
-		document.getElementById(x[0].id).setAttribute("typingAnimating","true");
-		window.wellKnownTypingEffect[x[0].id+"_index"] = index;
-		window.wellKnownTypingEffect[x[0].id+"_elementContents"] = x;
-        if (x[4] == false) {
-            x[0].innerHTML = "";
-            window.i[index] = 0;
-            window.clock[index] = setInterval(function() {
-                if (window.i[index] < x[1].length) {
-                    if (x[3].includes(window.i[index])) {
-                        x[0].innerHTML += "<br>";
-                        window.i[index] += 4;
-                    } else {
-                        x[0].innerHTML += x[1].charAt(window.i[index]);
-                        window.i[index]++;
-                    }
-                } else {
-                    clearInterval(window.clock);
-                }
-            }, x[2]);
-        } else {
-            loopPrintText(x, index);
-            window.outerClock[index] = setInterval(function() {
-                loopPrintText(x, index);
-            }, x[4] + (x[2] * (x[1].length)) + (x[6]==false?0:(x[2] * (x[1].length))+x[6]));
-        }
-    });
-}
-
-function backspaceAll(x,index){
-	var y = x[1].length;
-	var str;
-	setTimeout(function(){
-		window.backspaceClock[index] = setInterval(function(){
-			str = document.getElementById(x[0].id).innerHTML;
-			str = str.substring(0, str.length - 1);
-			document.getElementById(x[0].id).innerHTML=str;
-			if(y == 0){
-				clearInterval(window.backspaceClock[index]);
+	startWrite: function() {
+		typing.getAllElementsWithAttribute("addTypingEffect").forEach(function(x) {
+			typing.animateData.push([x, x.innerHTML, (parseFloat(x.getAttribute("typingSpeed")) * 1000), typing.getIndicesOf("<br>", x.innerHTML, !1), x.getAttribute("typingLoop"), JSON.parse(x.getAttribute("typingStopAllow").toLowerCase()),x.getAttribute("typingBackspace")]);
+			if (typing.animateData[typing.animateData.length - 1][4] == "false") {
+				typing.animateData[typing.animateData.length - 1][4] = !1;
+			} else {
+			   typing.animateData[typing.animateData.length - 1][4] = parseFloat(typing.animateData[typing.animateData.length - 1][4]) * 1000;
 			}
-			else{
-				y--;
+			if (typing.animateData[typing.animateData.length - 1][6] == "false") {
+				typing.animateData[typing.animateData.length - 1][6] = !1;
+			} else {
+				typing.animateData[typing.animateData.length - 1][6] = parseFloat(typing.animateData[typing.animateData.length - 1][6]) * 1000;
 			}
-		},x[2]);
-	},x[6]);
-}
+			
+			if (JSON.parse(x.getAttribute("typingKeepHeight").toLowerCase())) {
+				x.style.height = parseFloat(getComputedStyle(x, null).height.replace("px", ""))+"px";
+			}
+		});
+		typing.animateData.forEach(function(x, index) {
+			document.getElementById(x[0].id).setAttribute("typingAnimating","true");
+			typing.wellKnownTypingEffect[x[0].id+"_index"] = index;
+			typing.wellKnownTypingEffect[x[0].id+"_elementContents"] = x;
+			if (x[4] == false) {
+				x[0].innerHTML = "";
+				typing.i[index] = 0;
+				typing.clock[index] = setInterval(function() {
+					if (typing.i[index] < x[1].length) {
+						if (x[3].includes(typing.i[index])) {
+							x[0].innerHTML += "<br>";
+							typing.i[index] += 4;
+						} else {
+							x[0].innerHTML += x[1].charAt(typing.i[index]);
+							typing.i[index]++;
+						}
+					} else {
+						clearInterval(typing.clock);
+					}
+				}, x[2]);
+			} else {
+				typing.loopPrintText(x, index);
+				typing.outerClock[index] = setInterval(function() {
+					typing.loopPrintText(x, index);
+				}, x[4] + (x[2] * (x[1].length)) + (x[6]==false?0:(x[2] * (x[1].length))+x[6]));
+			}
+		});
+	},
 
-function stopAnimation(elementId, replaceValue){
-  return new Promise(function(resolve, reject) {
-		if (typeof window.wellKnownTypingEffect == "undefined"){
-			reject(new Error("Animations Not Started"));
-		}else if (document.getElementById(elementId) == null){
-			reject(new Error("Element Does Not Exist"));
-		}else if (document.getElementById(elementId).getAttribute("typingAnimating")=="false"){
-			reject(new Error("Element Is Not Being Animated"));
-		}else if (window.wellKnownTypingEffect[elementId+"_elementContents"][5] == false){
-			reject(new Error("Element Not Allowed To Stop"));
-		}else{
-			clearInterval(window.clock[window.wellKnownTypingEffect[elementId+"_index"]]);
-			clearInterval(window.outerClock[window.wellKnownTypingEffect[elementId+"_index"]]);
-			clearInterval(window.backspaceClock[window.wellKnownTypingEffect[elementId+"_index"]]);
-			document.getElementById(elementId).setAttribute("typingAnimating","false");
-			if (replaceValue != false){
-				document.getElementById(elementId).innerHTML = replaceValue;
-				typeWrite();
+	backspaceAll: function(x,index){
+		var y = x[1].length;
+		var str;
+		setTimeout(function(){
+			typing.backspaceClock[index] = setInterval(function(){
+				str = document.getElementById(x[0].id).innerHTML;
+				str = str.substring(0, str.length - 1);
+				document.getElementById(x[0].id).innerHTML=str;
+				if(y == 0){
+					clearInterval(typing.backspaceClock[index]);
+				}
+				else{
+					y--;
+				}
+			},x[2]);
+		},x[6]);
+	},
+
+	stopWrite: function(elementId, replaceValue){
+	  return new Promise(function(resolve, reject) {
+			if (typeof typing.wellKnownTypingEffect == "undefined"){
+				reject(new Error("Animations Not Started"));
+			}else if (document.getElementById(elementId) == null){
+				reject(new Error("Element Does Not Exist"));
+			}else if (document.getElementById(elementId).getAttribute("typingAnimating")=="false"){
+				reject(new Error("Element Is Not Being Animated"));
+			}else if (typing.wellKnownTypingEffect[elementId+"_elementContents"][5] == false){
+				reject(new Error("Element Not Allowed To Stop"));
 			}else{
-				document.getElementById(elementId).removeAttribute("addTypingEffect");
+				clearInterval(typing.clock[typing.wellKnownTypingEffect[elementId+"_index"]]);
+				clearInterval(typing.outerClock[typing.wellKnownTypingEffect[elementId+"_index"]]);
+				clearInterval(typing.backspaceClock[typing.wellKnownTypingEffect[elementId+"_index"]]);
+				document.getElementById(elementId).setAttribute("typingAnimating","false");
+				if (replaceValue != false){
+					document.getElementById(elementId).innerHTML = replaceValue;
+					typeWrite();
+				}else{
+					document.getElementById(elementId).removeAttribute("addTypingEffect");
+				}
+				resolve([typing.wellKnownTypingEffect[elementId+"_elementContents"][0],(replaceValue==false?false:true)]);
 			}
-			resolve([window.wellKnownTypingEffect[elementId+"_elementContents"][0],(replaceValue==false?false:true)]);
+		});
+	},
+
+	loopPrintText: function(x, index) {
+		x[0].innerHTML = "";
+		typing.i[index] = 0;
+		typing.clock[index] = setInterval(function() {
+			if (typing.i[index] < x[1].length) {
+				if (x[3].includes(typing.i[index])) {
+					x[0].innerHTML += "<br>";
+					typing.i[index] += 4;
+				} else {
+					x[0].innerHTML += x[1].charAt(typing.i[index]);
+					typing.i[index]++;
+				}
+			} else {
+				typing.clearInterval(typing.clock);
+				if (x[6]!=false){
+					typing.backspaceAll(x,index);
+				}
+			}
+		}, x[2]);
+	},
+
+	getAllElementsWithAttribute: function(attribute) {
+		var matchingElements = [];
+		var allElements = document.getElementsByTagName('*');
+		for (var i = 0, n = allElements.length; i < n; i++) {
+			if (allElements[i].getAttribute(attribute) !== null) {
+				matchingElements.push(allElements[i]);
+			}
 		}
-	});
-}
+		return matchingElements;
+	},
 
-function loopPrintText(x, index) {
-    x[0].innerHTML = "";
-    window.i[index] = 0;
-    window.clock[index] = setInterval(function() {
-        if (window.i[index] < x[1].length) {
-            if (x[3].includes(window.i[index])) {
-                x[0].innerHTML += "<br>";
-                window.i[index] += 4;
-            } else {
-                x[0].innerHTML += x[1].charAt(window.i[index]);
-                window.i[index]++;
-            }
-        } else {
-            window.clearInterval(window.clock);
-			if (x[6]!=false){
-				backspaceAll(x,index);
-			}
-        }
-    }, x[2]);
-}
-
-function getAllElementsWithAttribute(attribute) {
-    var matchingElements = [];
-    var allElements = document.getElementsByTagName('*');
-    for (var i = 0, n = allElements.length; i < n; i++) {
-        if (allElements[i].getAttribute(attribute) !== null) {
-            matchingElements.push(allElements[i]);
-        }
-    }
-    return matchingElements;
-}
-
-function getIndicesOf(searchStr, str, caseSensitive) {
-    var searchStrLen = searchStr.length;
-    if (searchStrLen == 0) {
-        return [];
-    }
-    var startIndex = 0,
-        index, indices = [];
-    if (!caseSensitive) {
-        str = str.toLowerCase();
-        searchStr = searchStr.toLowerCase();
-    }
-    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
-        indices.push(index);
-        startIndex = index + searchStrLen;
-    }
-    return indices;
-}
+	getIndicesOf: function(searchStr, str, caseSensitive) {
+		var searchStrLen = searchStr.length;
+		if (searchStrLen == 0) {
+			return [];
+		}
+		var startIndex = 0,
+			index, indices = [];
+		if (!caseSensitive) {
+			str = str.toLowerCase();
+			searchStr = searchStr.toLowerCase();
+		}
+		while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+			indices.push(index);
+			startIndex = index + searchStrLen;
+		}
+		return indices;
+	}
+};
