@@ -124,7 +124,7 @@ let typing =
 					typing.i[index]++;
 				}
 			} else {
-				typing.clearInterval(typing.clock);
+				clearInterval(typing.clock);
 				if (x[6]!=false){
 					typing.backspaceAll(x,index);
 				}
